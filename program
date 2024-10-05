@@ -1,0 +1,52 @@
+class IceCream {
+    constructor(flavor, price, quantity) {
+      this.flavor = flavor;
+      this.price = price;
+      this.quantity = quantity;
+    }
+  }
+  
+  class IceCreamShop {
+    constructor() {
+      this.inventory = [];
+    }
+    addIceCream(flavor, price, quantity) {
+      const newIceCream = new IceCream(flavor, price, quantity);
+      this.inventory.push(newIceCream);
+    }
+    updateIceCream(flavor, newPrice, newQuantity) {
+      const iceCream = this.inventory.find(item => item.flavor === flavor);
+      if (iceCream) {
+        if (newPrice !== undefined) iceCream.price = newPrice;
+        if (newQuantity !== undefined) iceCream.quantity = newQuantity;
+        console.log(`${flavor} has been updated.`);
+      } else {
+        console.log(`${flavor} not found in inventory.`);
+      }
+    }
+    calculateTotalValue() {
+      let totalValue = 0;
+      for (const iceCream of this.inventory) {
+        totalValue += iceCream.price * iceCream.quantity;
+      }
+      return totalValue;
+    }
+    displayInventory() {
+      console.log("Current Inventory:");
+      this.inventory.forEach(iceCream => {
+        console.log(
+          `Flavor: ${iceCream.flavor}, Price: $${iceCream.price}, Quantity: ${iceCream.quantity}`
+        );
+      });
+    }
+  }
+  const shop = new IceCreamShop();
+  shop.addIceCream("Vanilla", 2.5, 20);
+  shop.addIceCream("Chocolate", 3, 15);
+  shop.addIceCream("Strawberry", 2.8, 10);
+  shop.displayInventory();
+  shop.updateIceCream("Chocolate", 3.5, 18);
+
+  console.log(`Total Inventory Value: $${shop.calculateTotalValue().toFixed(2)}`);
+  shop.displayInventory();
+  
